@@ -1,0 +1,11 @@
+.pagination-nav {
+
+}
+.pagination-nav-item {
+    margin-inline: 0.5rem;
+}
+.pagination-nav-option {
+}
+.pagination-nav-option:hover {
+    background-color: gray;
+}

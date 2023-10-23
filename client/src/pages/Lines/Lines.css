@@ -1,0 +1,39 @@
+.transition-button {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    font-size: 1rem;
+    border: 0;
+}
+.transition-button:hover {
+    background-color: white;
+    color: black;
+}
+.checkbox-button-checked {
+    cursor: pointer;
+    border: 1px solid #0d6efd;
+    border-radius: 20px;
+    background-color: #0d6efd;
+    color: white;
+    padding-inline: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    width: fit-content;
+}
+.checkbox-button-checked:hover {
+    background-color: #0d41fd;
+}
+.checkbox-button-unchecked {
+    cursor: pointer;
+    border: 1px solid #e4e4e4;
+    border-radius: 20px;
+    background-color: #e4e4e4;
+    color: black;
+    padding-inline: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    width: fit-content;
+}
+.checkbox-button-unchecked:hover {
+    background-color: #d3d3d3;
+}

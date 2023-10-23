@@ -1,0 +1,6 @@
+export const USER_COL = "users"
+export const CUSTOMER_COL = "customers"
+export const TRIP_COL  = "trips"
+export const DRIVER_COL = "drivers"
+export const LINE_COL = "lines"
+export const TICKET_COL = "tickets"
