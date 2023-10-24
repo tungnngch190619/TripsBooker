@@ -37,26 +37,9 @@ return (
             <Nav className="navbar-body">
                 <Container className="p-3 navbar-body-inner">
                     <div className="text-secondary fw-semibold d-flex justify-content-center">
-                        <div>Service</div>
+                        <div>Management</div>
                     </div>
                     <hr className="divider-dark"/>
-                    <Nav.Link onClick={() => navigate("/trips")} className="navbar-item">
-                        <div className="text-black">Trips</div>
-                    </Nav.Link>
-                    <Nav.Link onClick={() => navigate("/tickets")} className="navbar-item">
-                        <div className="text-black">Tickets</div>
-                    </Nav.Link>
-                </Container>
-            </Nav>
-            <Nav className="navbar-body">
-                <Container className="p-3 navbar-body-inner">
-                    <div className="text-secondary fw-semibold d-flex justify-content-center">
-                        <div>QUẢN LÝ</div>
-                    </div>
-                    <hr className="divider-dark"/>
-                    <Nav.Link onClick={() => navigate("/customers")} className="navbar-item">
-                        <div className="text-black">Customers</div>
-                    </Nav.Link>
                     <Nav.Link onClick={() => navigate("/users")} className="navbar-item">
                         <div className="text-black">Users</div>
                     </Nav.Link>
@@ -65,9 +48,6 @@ return (
                     </Nav.Link>
                     <Nav.Link onClick={() => navigate("/lines")} className="navbar-item">
                         <div className="text-black">Lines</div>
-                    </Nav.Link>
-                    <Nav.Link href="/" className="navbar-item">
-                        <div className="text-black">Settings</div>
                     </Nav.Link>
                 </Container>
             </Nav>

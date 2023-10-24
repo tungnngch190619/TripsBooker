@@ -30,10 +30,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["Admin", "Staff"],
         default: "Admin"
-    },
-    firstLogin: {
-        type: Boolean,
-        default: true
     }
 },
 {timestamps: true})

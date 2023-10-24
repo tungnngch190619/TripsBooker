@@ -6,7 +6,6 @@ import getPassword  from "../../config/pwgeneration.js";
 import getIncrementId from "../../config/AutoIncrement.js";
 import { USER_COL } from "../../constants/collections.js";
 import { LOGGED_OUT, DOC_NOT_FOUND, UNKNOWN_ERROR, MISSING_REQUIRED_FIELD, LOCKED_USER, SUCCESS, INCORRECT_CREDENTIALS, NOT_MATCHED_PASSWORD} from "../../constants/messages.js";
-import { userLogger } from "../../config/logger.js";
 import Blacklist from "./blacklist.js";
 
 
@@ -15,41 +14,46 @@ const saltRounds = 10;
 
 export async function login(req, res) {
     const { username, password } = req.body;
+    console.log(password)
     User.findOne({ username })
     .then(existingUser => {
-        bcrypt.compare(password, existingUser.password, (err, result) => {
+        if(!existingUser) {
+            return res.status(401).json({
+                message: INCORRECT_CREDENTIALS
+            });
+        }
+        bcrypt.compare(password, existingUser?.password, (err, result) => {
             if(err) {
-                userLogger.error(`Error occurs when logging in with user ${username}`);
+                console.log(`Error occurs when logging in with user ${username}`);
                 return res.status(500).json({
                     message: UNKNOWN_ERROR,
                     error: err
                 });
             };
             if(result === false) {
-                userLogger.warn(`Failed attempt login with user ${username}`);
+                console.log(`Failed attempt login with user ${username}`);
                 return res.status(401).json({
                     message: INCORRECT_CREDENTIALS
                 });
             }
-            if(existingUser.active === true) {
-                const token = existingUser.generateAccessJWT();
+            if(existingUser?.active === true) {
+                const token = existingUser?.generateAccessJWT();
                 let options = {
                     maxAge: 20 * 60 * 1000, // would expire in 20minutes
                     httpOnly: true, // The cookie is only accessible by the web server
                     secure: true,
                     sameSite: 'None',
                   };
-                userLogger.info(`${username} logged in successfully`);
+                console.log(`${username} logged in successfully`);
                 res.cookie("SessionID", token, options);
                 return res.status(200).json({
                     message: "Welcome",
-                    username: existingUser.username,
-                    role: existingUser.role,
-                    firstLogin: existingUser.firstLogin,
+                    username: existingUser?.username,
+                    role: existingUser?.role,
                     token: token
                 });
             } else {
-                userLogger.warn(LOCKED_USER);
+                console.log(LOCKED_USER);
                 return res.status(400).json({
                     message: LOCKED_USER
                 });
@@ -100,7 +104,7 @@ export async function createNewUser(req, res) {
         });
         // check that user submits the required value
         if(!user.username || !user.fullName || !user.role || !user.password) {
-            userLogger.warn(MISSING_REQUIRED_FIELD);
+            console.log(MISSING_REQUIRED_FIELD);
             return res.status(400).json({
                 message: MISSING_REQUIRED_FIELD,
                 data: user
@@ -118,13 +122,13 @@ export async function createNewUser(req, res) {
             };
             user.save()
             .then(newUser => {
-                userLogger.info(`Created new user successfully: ${newUser.username}`);
-                return res.status(201).json({
+                console.log(`Created new user successfully: ${newUser.username}`);
+                return res.status(200).json({
                     message: SUCCESS,
                     data: newUser,
                 });
             }).catch (err => {
-                userLogger.error(err);
+                console.log(err);
                 res.status(500).json({
                     message: UNKNOWN_ERROR,
                     error: err
@@ -151,7 +155,6 @@ export function getAllUsers(req, res) {
         password: 0,
         createdAt: 0,
         updatedAt: 0,
-        firstLogin: 0,
         __v: 0,
     })
     .then(result => {
@@ -178,7 +181,7 @@ export function changePassword( req, res ) {
                 message: UNKNOWN_ERROR
             });
         };
-        User.findOneAndUpdate({_id: req.body.userId}, {$set: {password: hash, firstLogin: false}})
+        User.findOneAndUpdate({_id: req.body.userId}, {$set: {password: hash}})
         .then( result => {
             return res.status(200).json({
                 message: SUCCESS
@@ -196,13 +199,13 @@ export function resetPassword(req, res) {
     //generate a random password
     const password = getPassword();
     bcrypt.hash(password, saltRounds, (err, hash) => {
-        User.updateOne({_id: req.params.userId}, {$set: {password: hash, firstLogin: true}})
+        User.updateOne({_id: req.params.userId}, {$set: {password: hash}})
         .then(() => {
             User.findById({_id: req.params.userId}, {password: 0, __v: 0})
             .then((user) => {
                 return res.status(200).json({
-                    title: "Reset mật khẩu thành công",
-                    body: "Mật khẩu mới của " + user.username + " là: " + password,
+                    title: "Reset password successfully",
+                    body: "New password of " + user.username + " is: " + password,
                 })
             })
         }).catch(err => {
@@ -225,7 +228,7 @@ export function editUser( req, res ) {
             };
             User.findOneAndUpdate({_id: _id}, {$set: {password: hash, fullName: fullName, role: role}})
             .then( result => {
-                userLogger.info(`Edited user successfully: ${username}`);
+                console.log(`Edited user successfully: ${username}`);
                 return res.status(200).json({
                     message: SUCCESS
                 })
@@ -239,7 +242,7 @@ export function editUser( req, res ) {
     } else {
         User.findOneAndUpdate({_id: _id}, {$set: {fullName: fullName, role: role}})
         .then( result => {
-            userLogger.info(`Edited user successfully: ${username}`);
+            console.log(`Edited user successfully: ${username}`);
             return res.status(200).json({
                 message: SUCCESS
             })

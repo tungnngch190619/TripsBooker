@@ -1,9 +1,18 @@
 import { Button, Modal } from "react-bootstrap"
 
 const NotificationModal = (props) => {
-    const {show, setShow, title, body} = props
+    const {show, setShow, title, body, setTitle, setBody} = props
+    const onHide = () => {
+        setShow(false)
+        if(title && setTitle) {
+            setTitle("")
+        }
+        if(body && setBody) {
+            setBody("")
+        }
+    }
     return (
-        <Modal show={show} onHide={() => setShow(false)}>
+        <Modal show={show} onHide={() => onHide()}>
             {title ?
             <Modal.Header closeButton>
                 <Modal.Title>
@@ -21,7 +30,7 @@ const NotificationModal = (props) => {
             null}
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShow(false)}>
+                <Button variant="secondary" onClick={() => onHide()}>
                     Close
                 </Button>
             </Modal.Footer>

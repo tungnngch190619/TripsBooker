@@ -295,7 +295,6 @@ const Lines = () => {
     return (
         <WebpageBackground>
             <div className="table-wrapper">
-                <div className="table-title">Người dùng</div>
 
                 <CustomizedTable data={lines} columns={columns} options={linesOptions} tableTop={tableTop}/>
 
@@ -651,7 +650,7 @@ const Lines = () => {
                     </Modal.Body>
                 </Modal>
 
-                <NotificationModal show={notificationModal} setShow={setNotificationModal} title={notificationTitle} body={notificationBody}/>
+                <NotificationModal show={notificationModal} setShow={setNotificationModal} title={notificationTitle} body={notificationBody} setTitle={setNotificationTitle} setBody={setNotificationBody}/>
 
                 <ConfirmationModal
                 show={deleteConfirmationModal}

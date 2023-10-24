@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import "./CustomizedTable.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 
 function CustomizedTable (props) {
     const {data, columns, options, tableTop} = props
@@ -19,7 +20,7 @@ function CustomizedTable (props) {
                         <td>
                             <div>
                                 <Button disabled>
-                                    <FontAwesomeIcon icon={"square-check"}/>
+                                    <FontAwesomeIcon icon={faSquareCheck}/>
                                 </Button>
                             </div>
                         </td> 
@@ -27,7 +28,7 @@ function CustomizedTable (props) {
                         <td>
                             <div>
                                 <Button disabled>
-                                    <FontAwesomeIcon icon={"square"}/>
+                                    <FontAwesomeIcon icon={faSquare}/>
                                 </Button>
                             </div>
                         </td>

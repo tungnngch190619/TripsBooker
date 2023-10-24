@@ -1,5 +1,4 @@
 import getIncrementId from "../../config/AutoIncrement.js";
-import { lineLogger } from "../../config/logger.js";
 import { LINE_COL } from "../../constants/collections.js";
 import { MISSING_REQUIRED_FIELD, SUCCESS, UNKNOWN_ERROR } from "../../constants/messages.js";
 import Line from "./models.js";
@@ -74,7 +73,7 @@ export async function createNewLine (req, res) {
     try {
         const line = await newLine.save();
         if(!line) throw "Thêm tuyến không thành công";
-        lineLogger.info("Create new line successfully");
+        console.log("Create new line successfully");
         return res.status(200)
         .json({
             message: SUCCESS,

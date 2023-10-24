@@ -148,7 +148,6 @@ const Drivers = () => {
     return (
         <WebpageBackground>
             <div className="table-wrapper">
-                <div className="table-title">Người dùng</div>
 
                 <CustomizedTable data={drivers} columns={columns} options={driverOptions} tableTop={tableTop}/>
 
@@ -281,7 +280,7 @@ const Drivers = () => {
                     </Modal.Body>
                 </Modal>
 
-                <NotificationModal show={notificationModal} setShow={setNotificationModal} title={notificationTitle} body={notificationBody}/>
+                <NotificationModal show={notificationModal} setShow={setNotificationModal} title={notificationTitle} body={notificationBody} setTitle={setNotificationTitle} setBody={setNotificationBody}/>
 
             </div>
         </WebpageBackground>

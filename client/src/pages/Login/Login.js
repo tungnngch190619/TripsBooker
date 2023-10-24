@@ -25,21 +25,18 @@ function Login (props) {
     const [notificationBody, setNotificationBody] = useState("")
 
     const login = async (values) => {
-        let {username, password} = values
         console.log("logging in")
         try {
             const res = await axios.post("/api/users/login", {
-                username: username,
-                password: password,
+                username: values?.username,
+                password: values?.password,
             })
-            if(res.status === 200 ) {
-                console.log("logged in")
-                let {username, role, token} = res.data
-                dispatch(loginUser({username, role, token}))
-                navigate("/users")
-            }
+            let {username, role, token} = res.data
+            dispatch(loginUser({username, role, token}))
+            console.log("logged in")
+            navigate("/users")
         } catch (err) {
-            if(err.response.status === 400) {
+            if([400, 401, 500].some((errorCode) => errorCode == err.response.status)) {
                 setNotificationModal(true)
                 setNotificationBody(err.response.data.message)
             }
@@ -105,7 +102,7 @@ function Login (props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <NotificationModal show={notificationModal} setShow={setNotificationModal} body={notificationBody}></NotificationModal>
+            <NotificationModal show={notificationModal} setShow={setNotificationModal} body={notificationBody} setBody={setNotificationBody}></NotificationModal>
         </div>
     )
 }

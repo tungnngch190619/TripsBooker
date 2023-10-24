@@ -56,7 +56,10 @@ const Users = () => {
             })
             setReset(!reset)
         } catch (err) {
-            console.log(err)
+            if([400, 500].some((errorCode) => errorCode == err.response.status)) {
+                setNotificationModal(true)
+                setNotificationBody(err.response.data.message)
+            }
             handleRequestError(dispatch, err)
         }
     }
@@ -171,7 +174,6 @@ const Users = () => {
     return (
         <WebpageBackground>
             <div className="table-wrapper">
-                <div className="table-title">Người dùng</div>
 
                 <CustomizedTable data={users} columns={columns} options={userOptions} tableTop={tableTop}/>
 
@@ -321,7 +323,7 @@ const Users = () => {
                     </Modal.Body>
                 </Modal>
 
-                <NotificationModal show={notificationModal} setShow={setNotificationModal} title={notificationTitle} body={notificationBody}/>
+                <NotificationModal show={notificationModal} setShow={setNotificationModal} title={notificationTitle} body={notificationBody} setTitle={setNotificationTitle} setBody={setNotificationBody}/>
 
             </div>
         </WebpageBackground>

@@ -6,8 +6,6 @@ import {
   Navigate,
 } from "react-router-dom"
 import {ViewportProvider} from './ViewportContext'
-import Trips from "./pages/Trips/Trips"
-import Tickets from './pages/Tickets';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMagnifyingGlass, faAngleLeft, faAngleRight, faLock, faPlus, faPenToSquare, faLockOpen, faKey, faTrash, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { faSquare, faSquareCheck } from '@fortawesome/free-regular-svg-icons';
@@ -31,13 +29,10 @@ function App() {
             <Route element={<ProtectedRoute conditional={role==="Admin"} redirect={<Navigate to="/accessDenied"/>}/>}>
               <Route exact path="/users" element={<Users/>}/>
               <Route exact path="/drivers" element={<Drivers/>}/>
-              <Route exact path="/tickets" element={<Tickets/>}/>
-              <Route exact path="/lines" element={<Lines/>}/>
+              <Route exact path="/" element={<Lines/>}/>
             </Route>
           </Route>
-          <Route exact path="/" element={<Login tokenExpired={tokenExpired}/>} />
           <Route exact path="/login" element={<Login tokenExpired={tokenExpired}/>} />
-          <Route exact path="/trips" element={<Trips/>} />
           <Route exact path="/accessDenied" element={<AccessDenied/>} />
         </Routes>
       </ViewportProvider>
