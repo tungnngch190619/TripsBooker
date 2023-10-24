@@ -14,12 +14,7 @@ import { handleRequestError } from "../../utils/handleRequestError";
 const Drivers = () => {
     const dispatch = useDispatch()
     const {Formik} = formik
-    const addSchema = yup.object().shape({
-        fullName: yup.string().required("Full Name is required").max(50, "50 characters maximum"),
-        phone: yup.number("Invalid phone number").required("Phone number is required"),
-        shift: yup.string().oneOf(["Day", "Night"]),
-    });
-    const editSchema = yup.object().shape({
+    const schema = yup.object().shape({
         fullName: yup.string().required("Full Name is required").max(50, "50 characters maximum"),
         phone: yup.number("Invalid phone number").required("Phone number is required"),
         shift: yup.string().oneOf(["Day", "Night"]),
@@ -157,7 +152,7 @@ const Drivers = () => {
                     </Modal.Header>
                     <Modal.Body>
                         <Formik
-                        validationSchema={addSchema} 
+                        validationSchema={schema} 
                         onSubmit={(values) => createNewDriver(values)}
                         initialValues={{
                             fullName: "",
@@ -220,7 +215,7 @@ const Drivers = () => {
                     </Modal.Header>
                     <Modal.Body>
                     <Formik
-                        validationSchema={editSchema} 
+                        validationSchema={schema} 
                         onSubmit={(values) => editDriver(values)}
                         initialValues={{
                             fullName: editFullName,

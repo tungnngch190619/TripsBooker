@@ -19,7 +19,7 @@ const Lines = () => {
     
     const locations = ["Hà Nội", "Hải Phòng", "Hạ Long", "Bắc Ninh", "Hải Dương"]
     const frequencies = ["15'", "30'", "1h", "2h", "3h", "4h", "5h"]
-    const busTypes = ["Limousin", "Xe khách"]
+    const busTypes = ["Mini-Bus", "Bus"]
 
     const addSchema = yup.object().shape({
         departure: yup.string().required("Departure is required").oneOf(locations),
@@ -29,7 +29,6 @@ const Lines = () => {
         numberOfSeat: yup.number("Must be a numeric").required("Number of seats is required"),
         plateNumber: yup.string(),
         price: yup.number("Must be a numeric").required("Ticket price is required"),
-        assistant: yup.string(),
     });
 
     const [lines, setLines] = useState([])
@@ -64,8 +63,7 @@ const Lines = () => {
             busType,
             numberOfSeat,
             plateNumber,
-            price,
-            assistant} = values
+            price} = values
         let driverIds = []
         selectedDrivers.map((d) => driverIds.push(d._id))
         try {
@@ -78,7 +76,6 @@ const Lines = () => {
                 plateNumber: plateNumber,
                 price: price,
                 driverIds: driverIds,
-                assistant: assistant
             })
             setNotificationModal(true)
             setNotificationBody(res.data.message)
@@ -98,8 +95,7 @@ const Lines = () => {
             busType,
             numberOfSeat,
             plateNumber,
-            price,
-            assistant} = values
+            price} = values
         let driverIds = []
         selectedDrivers.map((d) => driverIds.push(d._id))
         try {
@@ -112,7 +108,6 @@ const Lines = () => {
                 plateNumber: plateNumber,
                 price: price,
                 driverIds: driverIds,
-                assistant: assistant,
             })
             setNotificationModal(true)
             setNotificationBody(res.data.message)
@@ -214,6 +209,7 @@ const Lines = () => {
         setAddModal(false)
         setSelectedDrivers([])
         setDrivers([])
+        setDriversOptionsExpandeded(false)
     }
 
     const onHideEditModal = () => {
@@ -221,6 +217,7 @@ const Lines = () => {
         setSelectedDrivers([])
         setEditItem(null)
         setDrivers([])
+        setDriversOptionsExpandeded(false)
     }
 
     const getDrivers = async () => {
@@ -314,7 +311,6 @@ const Lines = () => {
                             numberOfSeat: "",
                             plateNumber: "",
                             price: "",
-                            assistant: "",
                         }}>
                             {({ handleSubmit, handleChange, values, touched, errors }) => (
                                 <Form className="form" noValidate onSubmit={(handleSubmit)}>
@@ -441,24 +437,6 @@ const Lines = () => {
                                         selectedData={selectedDrivers}
                                         /> : null}
                                     </Form.Group>
-                                    <Form.Group className="mb-3 d-flex flex-row position-relative" controlId="validationFormik09">
-                                        <Form.Label className="form-label">Assistant:</Form.Label>
-                                        <Form.Select 
-                                        value={values.assistant}
-                                        name="assistant"
-                                        onChange={handleChange}
-                                        isInvalid={touched.assistant && errors.assistant}
-                                        type="text"
-                                        className="form-input">
-                                            <option value="">{isSelectOptionsLoaded ? "Choose Assistant" : "Loading"}</option>
-                                            {drivers.map(d => <option value={d._id}>{d.fullName + ", Id: " + d._id}</option>)}
-                                        </Form.Select>
-                                        {isSelectOptionsLoaded ? null :
-                                        <Spinner animation="border" role="status" className="ms-3">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </Spinner>}
-                                        <Form.Control.Feedback type="invalid" tooltip>{errors.assistant}</Form.Control.Feedback>
-                                    </Form.Group>
                                     <Form.Group className="d-flex flex-row justify-content-end">
                                         <Button variant="primary" type="submit">
                                             Create
@@ -491,7 +469,6 @@ const Lines = () => {
                             numberOfSeat: editItem?.numberOfSeat,
                             plateNumber: editItem?.plateNumber,
                             price: editItem?.price,
-                            assistant: editItem?.assistant,
                         }}>
                             {({ handleSubmit, handleChange, values, touched, errors }) => (
                                 <Form className="form" noValidate onSubmit={(handleSubmit)}>
@@ -620,24 +597,6 @@ const Lines = () => {
                                         data={remainingDrivers}
                                         selectedData={selectedDrivers}
                                         /> : null}
-                                    </Form.Group>
-                                    <Form.Group className="mb-3 d-flex flex-row position-relative" controlId="validationFormik09">
-                                        <Form.Label className="form-label">Assistant:</Form.Label>
-                                        <Form.Select 
-                                        value={values.assistant}
-                                        name="assistant"
-                                        onChange={handleChange}
-                                        isInvalid={touched.assistant && errors.assistant}
-                                        type="text"
-                                        className="form-input">
-                                            <option value="">{isSelectOptionsLoaded ? "Choose Assistant" : "Loading"}</option>
-                                            {drivers.map(d => <option value={d._id}>{d.fullName + ", Id: " + d._id}</option>)}
-                                        </Form.Select>
-                                        {isSelectOptionsLoaded ? null :
-                                        <Spinner animation="border" role="status" className="ms-3">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </Spinner>}
-                                        <Form.Control.Feedback type="invalid" tooltip>{errors.assistant}</Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group className="d-flex flex-row justify-content-end">
                                         <Button variant="primary" type="submit">

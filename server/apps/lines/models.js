@@ -21,7 +21,7 @@ const lineSchema = new mongoose.Schema({
     busType: {
         type: String,
         required: true,
-        enum: ["Limousin", "Xe khách"]
+        enum: ["Mini-Bus", "Bus"]
     },
     numberOfSeat: {
         type: Number,
@@ -33,9 +33,6 @@ const lineSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
-    },
-    assistant: {
-        type: String,
     },
     drivers: [{type: Number, ref: "Driver"}],
     trips: [{type: Number, ref: "Trip"}]

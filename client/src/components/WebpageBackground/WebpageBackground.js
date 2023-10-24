@@ -11,6 +11,7 @@ function WebpageBackground ({ children }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const username = useSelector((state) => state.user.username)
+    const role = useSelector((state) => state.user.role)
 
     const logout = async (e) => {
         e.preventDefault()
@@ -40,15 +41,21 @@ return (
                         <div>Management</div>
                     </div>
                     <hr className="divider-dark"/>
+                    {role==="Admin" ? 
                     <Nav.Link onClick={() => navigate("/users")} className="navbar-item">
                         <div className="text-black">Users</div>
                     </Nav.Link>
+                    : null}
+                    {role==="Staff" || role==="Admin" ? 
                     <Nav.Link onClick={() => navigate("/drivers")} className="navbar-item">
                         <div className="text-black">Drivers</div>
                     </Nav.Link>
+                    : null}
+                    {role==="Staff" || role==="Admin" ? 
                     <Nav.Link onClick={() => navigate("/lines")} className="navbar-item">
                         <div className="text-black">Lines</div>
                     </Nav.Link>
+                    : null}
                 </Container>
             </Nav>
         </Navbar>

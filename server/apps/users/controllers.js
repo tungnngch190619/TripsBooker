@@ -117,7 +117,7 @@ export async function createNewUser(req, res) {
         .then(count => {
             if(count > 0) {
                 return res.status(400).json({
-                    message: "Tên đăng nhập đã tồn tại"
+                    message: "Username already existed"
                 });
             };
             user.save()

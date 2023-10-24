@@ -27,7 +27,11 @@ export function getOneDriver (req, res) {
 };
 
 export function getAllDrivers( req, res ) {
-    Driver.find()
+    Driver.find({}, {
+        createdAt: 0,
+        updatedAt: 0,
+        __v: 0,
+    })
     .then( result => {
         res.status(200).send(result);
     }).catch(err => {

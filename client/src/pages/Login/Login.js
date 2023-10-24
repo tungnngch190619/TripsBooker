@@ -34,7 +34,7 @@ function Login (props) {
             let {username, role, token} = res.data
             dispatch(loginUser({username, role, token}))
             console.log("logged in")
-            navigate("/users")
+            navigate("/")
         } catch (err) {
             if([400, 401, 500].some((errorCode) => errorCode == err.response.status)) {
                 setNotificationModal(true)

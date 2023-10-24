@@ -96,7 +96,7 @@ function CustomizedTable (props) {
             </Table>
             <Container className="d-flex flex-row justify-content-between">
                 <div>
-                    {(currentSegment - 1) * 10 + 1} đến {currentSegment*10 > data.length ? data.length : currentSegment*10} trong tổng {data.length}
+                    {(currentSegment - 1) * 10 + 1} - {currentSegment*10 > data.length ? data.length : currentSegment*10} of {data.length} results
                     </div>
                 {paginationNavigation()}
             </Container>

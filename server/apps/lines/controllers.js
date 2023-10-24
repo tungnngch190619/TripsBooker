@@ -24,7 +24,6 @@ export function getAllLinesWithoutRefs (req, res) {
         createdAt: 0,
         updatedAt: 0,
         drivers: 0,
-        assistant: 0,
         trips: 0,
         __v: 0,
     })
@@ -63,9 +62,8 @@ export async function createNewLine (req, res) {
         plateNumber: req.body.plateNumber,
         drivers: req.body.driverIds,
         price: req.body.price,
-        assistant: req.body.assistant
     });
-    if(!newLine.departure || !newLine.arrival || !newLine.frequency || !newLine.busType || !newLine.numberOfSeat || newLine.drivers.length ==0 ) {
+    if(!newLine.departure || !newLine.arrival || !newLine.frequency || !newLine.busType || !newLine.numberOfSeat ) {
         return res.status(403).json({
             message: MISSING_REQUIRED_FIELD
         })
@@ -96,7 +94,6 @@ export function updateOneLine (req, res) {
         numberOfSeat: req.body.numberOfSeat,
         plateNumber: req.body.plateNumber,
         drivers: req.body.driverIds,
-        assistant: req.body.assistant
     }}, {new: true}).then ( result => {
         return res.status(200).json({
             message: SUCCESS,

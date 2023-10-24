@@ -26,13 +26,18 @@ function App() {
       <ViewportProvider>
         <Routes>
           <Route element={<ProtectedRoute conditional={isAuthenticated===true} redirect={<Navigate to="/login"/>}/>}>
-            <Route element={<ProtectedRoute conditional={role==="Admin"} redirect={<Navigate to="/accessDenied"/>}/>}>
+            <Route element={<ProtectedRoute conditional={role==="Admin"} redirect={<Navigate to="/accessDenied" replace/>}/>}>
               <Route exact path="/users" element={<Users/>}/>
+            </Route>
+            <Route element={<ProtectedRoute conditional={role==="Staff" || role==="Admin"} redirect={<Navigate to="/accessDenied" replace/>}/>}>
               <Route exact path="/drivers" element={<Drivers/>}/>
               <Route exact path="/" element={<Lines/>}/>
+              <Route exact path="/lines" element={<Lines/>}/>
             </Route>
           </Route>
-          <Route exact path="/login" element={<Login tokenExpired={tokenExpired}/>} />
+          <Route element={<ProtectedRoute conditional={isAuthenticated===false} redirect={<Navigate to="/"/>}/>}>
+            <Route exact path="/login" element={<Login tokenExpired={tokenExpired}/>} />
+          </Route>
           <Route exact path="/accessDenied" element={<AccessDenied/>} />
         </Routes>
       </ViewportProvider>

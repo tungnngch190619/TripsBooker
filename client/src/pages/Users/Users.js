@@ -51,9 +51,10 @@ const Users = () => {
             const res = await axios.post("/api/users/register", {
                 username: username,
                 password: password,
-                fullName: fullName,
+                fullName: fullName.trim(),
                 role: role,
             })
+            setAddModal(false)
             setReset(!reset)
         } catch (err) {
             if([400, 500].some((errorCode) => errorCode == err.response.status)) {
